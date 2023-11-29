@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <base target="_top">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+  <title>Signature Pad</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <header id="header">
+    <div id="logo">
+      <img src="logo.jpg" alt="Logo" class="img-fluid" width="150" height="150">
+      <h1> Sam's Place </h1>
+    </div>
+    <div class="margin"> </div>
+  </header>
+
+  <main>
+    <div class="paper"> 
+    <div id="app" class="container">
+      <div class="margin text-center">
+        <div class="canvas mx-auto">
+          <h1> Liability Agreement for Short-Term Rental </h1>
+          <p> This agreement ("Agreement") is entered into between the property owner/manager ("Owner") and the
+            short-term renter ("Renter") for the property located at [Property Address]. Renter acknowledges and agrees
+            to assume full responsibility for any damage to the property or its contents during the rental period.
+            Renter further understands and accepts liability for any injuries sustained by themselves or their guests
+            while on the premises. </p>
+          <p> Renter agrees to maintain the property in good condition and promptly report any damages or issues to the
+            Owner. In the event of negligence or willful misconduct leading to damage, Renter agrees to reimburse the
+            Owner for all associated repair or replacement costs. Renter also acknowledges the importance of securing
+            personal liability insurance and understands that the Owner's insurance does not cover Renter's personal
+            belongings. By signing this Agreement, Renter acknowledges awareness and acceptance of these terms,
+            relieving the Owner of any liability for losses, injuries, or damages incurred during the rental period.</p>
+          <p> I read and acknowledge contract above: </p>
+          <div class="print name">
+            <label for="name"> Print Name: </label>
+            <input type="text" id="name" name="name" class="custom-border">
+          </div>
+          <div class="date-section">
+            <label for="date"> Today's Date: </label>
+            <input type="date" id="date" name="date" class="custom-border">
+          </div>
+          <canvas id="sig" width="500px" height="100px" class="border" style="cursor: crosshair;"></canvas>
+          <div>
+            <button type="button" class="pill" id="clearSig">Clear</button>
+            <button type="button" class="pill" id="send">Send</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <div id="messageContainer" class="alert alert-success" style="display: none;">
+      Signature sent successfully!
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footerContainer">
+      <p class="copyright">© Sam's Place </p>
+      <img src="logo.jpg" alt="Logo" class="img-fluid" width="150"
+        height="150">
+    </div>
+  </footer>
+
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+    integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+    integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
+    integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+  <script>
+
+    var signaturePad;
+
+    function setupSignatureBox() {
+      var canvas = document.getElementById("sig");
+      signaturePad = new SignaturePad(canvas);
+    }
+
+    function clearSignature() {
+      signaturePad.clear();
+    }
+
+
+    function sendToDrive() {
+      var nameInput = document.getElementById("name").value.trim();
+      var dateInput = document.getElementById("date").value.trim();
+
+      if (nameInput === '' || dateInput === '') {
+        alert('Please fill out all the information (Print Name and Today\'s Date) before sending.');
+        return;
+      }
+
+      var mainContent = document.getElementById("app");
+      html2canvas(mainContent).then(function (canvas) {
+        var imageData = canvas.toDataURL();
+        google.script.run.withSuccessHandler(function () {
+          document.getElementById('messageContainer').style.display = 'block';
+          setTimeout(function () {
+            document.getElementById('messageContainer').style.display = 'none';
+          }, 3000);
+        }).recieveSignature(imageData);
+      });
+    }
+
+    document.getElementById("clearSig").addEventListener("click", clearSignature);
+    document.getElementById("send").addEventListener("click", sendToDrive);
+    document.addEventListener("DOMContentLoaded", setupSignatureBox);
+  </script>
+</body>
+</html>

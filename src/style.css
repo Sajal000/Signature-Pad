@@ -1,0 +1,111 @@
+    @import url('https://fonts.googleapis.com/css2?family=Balsamiq+Sans&display=swap');
+    
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100%; 
+      max-height: 100%; 
+      background: #FAFCEF;
+      display: flex;
+      flex-direction: column;
+      font-family: 'Balsamiq Sans', sans-serif;
+    }
+  
+    header {
+      position: sticky;
+      top: 0;
+      left: 0;
+      width: 150%;
+      height: 150px;
+      background: #FAFCEF;
+    }
+
+    #header h1{
+      font-size: 80px; 
+      font-family: 'Balsamiq Sans', sans-serif;
+      color: #0D2235;
+      margin-left: 20px;
+      white-space: nowrap;
+      line-height: 150px;
+      background: #FAFCEF;
+    }
+  
+    header img{
+      max-width: 100%;
+      max-height: 100%;
+      float: left;
+    }
+  
+    #clearSig, #send{
+      background-color: #F06E56;
+      color: white;
+      font-size: 12px;
+      padding: 0.5em 1em; 
+      margin: 0.25em;
+      border-radius: 1em;
+      border: none;
+      outline:none;
+    } 
+  
+    #clearSig:hover,#send:hover {
+      background-color: #cccccc;
+    }
+  
+    #clearSig:active,#send:active{
+      background-color: #0D2235;
+    }
+  
+    main {
+      flex: 1;
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.4;
+      padding: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .paper{
+      background-color: white;
+      padding: 20px; 
+      border: 1px solid #CCCCCC; 
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+    }
+
+    h1{
+      font-weight: bolder;
+    }
+  
+    p{
+      font-weight: bold;
+    }
+
+
+    canvas{
+      background: white;
+    }
+  
+    .footer {
+      text-align: center;
+      background-color:  #FAFCEF;
+      padding: 20px;
+    }
+  
+    .footerContainer {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+      
+    .copyright {
+      margin-bottom: 10px;
+    }
+
+    .custom-border{
+      border: 1px solid #ccc; 
+      border-radius: 5px;   
+      padding: 5px;       
+      margin-bottom: 15px;
+    }
+  
