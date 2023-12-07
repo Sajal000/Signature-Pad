@@ -94,25 +94,49 @@
 
 
     function sendToDrive() {
-      var nameInput = document.getElementById("name").value.trim();
-      var dateInput = document.getElementById("date").value.trim();
+       var nameInput = document.getElementById("name").value.trim();
+       var dateInput = document.getElementById("date").value.trim();
 
-      if (nameInput === '' || dateInput === '') {
-        alert('Please fill out all the information (Print Name and Today\'s Date) before sending.');
-        return;
+       var existingAlert = document.getElementById("errorAlert");
+      if (existingAlert) {
+        existingAlert.remove();
       }
+
+       if (dateInput === '' & nameInput === '') {
+         displayError ('Please enter the date and your name!');
+        return;
+       }
+
+       if (nameInput === '') {
+          displayError ('Please enter your name!');
+         return;
+        }
+       if (dateInput === ''){
+         displayError ('Please enter the date!');
+        return;
+       }
+
 
       var mainContent = document.getElementById("app");
       html2canvas(mainContent).then(function (canvas) {
-        var imageData = canvas.toDataURL();
-        google.script.run.withSuccessHandler(function () {
-          document.getElementById('messageContainer').style.display = 'block';
-          setTimeout(function () {
-            document.getElementById('messageContainer').style.display = 'none';
-          }, 3000);
-        }).recieveSignature(imageData);
+      var imageData = canvas.toDataURL();
+      google.script.run.withSuccessHandler(function () {
+      document.getElementById('messageContainer').style.display = 'block';
+      setTimeout(function () {
+        document.getElementById('messageContainer').style.display = 'none';
+      }, 3000);
+      }).recieveSignature(imageData);
       });
-    }
+      }
+
+       function displayError(errorMessage) {
+       var alertDiv = document.createElement('div');
+       alertDiv.className = 'alert alert-danger';
+       alertDiv.id = 'errorAlert';
+       alertDiv.textContent = errorMessage;
+       var signatureBox = document.getElementById("sig");
+       signatureBox.parentNode.insertBefore(alertDiv, signatureBox);
+       }
 
     document.getElementById("clearSig").addEventListener("click", clearSignature);
     document.getElementById("send").addEventListener("click", sendToDrive);
